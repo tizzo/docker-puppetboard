@@ -1,6 +1,17 @@
+# Configure Apache on this server
+class { 'apache':
+  default_vhost => false,
+}
+class { 'apache::mod::wsgi': }
+
 class { 'puppetboard':
   manage_virtualenv => true,
-  manage_git        => true,
   puppetdb_host     => 'puppetdb',
-  puppetdb_port     => '8081',
+  puppetdb_port     => 8081,
+  manage_git        => true,
+}
+
+class { 'puppetboard::apache::vhost':
+  vhost_name => 'pboard.example.com',
+  port       => 80,
 }
